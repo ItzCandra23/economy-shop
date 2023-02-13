@@ -381,7 +381,6 @@ export namespace ShopForm {
             const r = f.response;
             if (r === null) return;
             categoriesForm(ShopMain.getCategories()[r], categories[r], player);
-            player.sendMessage(`response: ${r}`);
         });
     }
 
