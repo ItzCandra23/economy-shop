@@ -359,7 +359,6 @@ var ShopForm;
             if (r === null)
                 return;
             categoriesForm(ShopMain.getCategories()[r], categories[r], player);
-            player.sendMessage(`response: ${r}`);
         });
     }
     ShopForm.main = main;
