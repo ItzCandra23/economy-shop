@@ -1,0 +1,97 @@
+{
+  "shopui": {
+    "title": "§l§2ShopUI",
+    "description": "",
+    "buy_content": [
+      "Money: §e%money%",
+      "Item: §a%item%",
+      "Price: §e%price%"
+    ],
+    "buttons": {
+      "category": "§l%name%§r\n§8Click for more",
+      "item": "§a%name%§r\n§7Price: §e%price%"
+    }
+  },
+  "category": {
+    "blocks": {
+      "icon": "textures/blocks/cobblestone",
+      "path": "path",
+      "name": "§l§aBlocks",
+      "category": {}
+    },
+    "foods": {
+      "icon": "textures/items/beef_cooked",
+      "path": "path",
+      "name": "§l§6Foods",
+      "category": {}
+    },
+    "tools": {
+      "icon": "textures/items/diamond_sword",
+      "path": "path",
+      "name": "§l§dTools",
+      "category": {}
+    }
+  },
+  "items": {
+    "blocks": [
+      {
+        "icon": "textures/blocks/grass_side_carried",
+        "path": "path",
+        "item": "minecraft:grass",
+        "price": 1.5
+      },
+      {
+        "icon": "textures/blocks/dirt",
+        "path": "path",
+        "item": "minecraft:dirt",
+        "price": 0.7
+      },
+      {
+        "icon": "textures/blocks/stone",
+        "path": "path",
+        "item": "minecraft:stone",
+        "price": 2
+      },
+      {
+        "icon": "textures/blocks/cobblestone",
+        "path": "path",
+        "item": "minecraft:cobblestone",
+        "price": 1.3
+      }
+    ],
+    "foods": [
+      {
+        "icon": "textures/items/beef_cooked",
+        "path": "path",
+        "item": "minecraft:cooked_beef",
+        "price": 1.8
+      },
+      {
+        "icon": "textures/items/beef_raw",
+        "path": "path",
+        "item": "minecraft:beef",
+        "price": 1.2
+      }
+    ],
+    "tools": [
+      {
+        "icon": "textures/items/iron_sword",
+        "path": "path",
+        "item": "minecraft:iron_sword",
+        "price": 8
+      },
+      {
+        "icon": "textures/items/iron_axe",
+        "path": "path",
+        "item": "minecraft:iron_axe",
+        "price": 8.7
+      },
+      {
+        "icon": "textures/items/iron_pickaxe",
+        "path": "path",
+        "item": "minecraft:iron_pickaxe",
+        "price": 8.7
+      }
+    ]
+  }
+}
