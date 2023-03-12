@@ -394,7 +394,7 @@ var ShopForm;
     function buyForm(shopItem, player) {
         const display = inventory_1.ItemStack.constructWith(shopItem.item, undefined, shopItem.data);
         const form = new form_1.CustomForm(display.getCustomName());
-        let content = shop.shopui.buy_content.map((v) => v + "\n").toString().replace(/%player%/g, player.getNameTag()).replace(/%money%/g, economy_x_1.EconomyX.currency() + economy_x_1.EconomyX.getMoney(player)).replace(/%item%/g, display.getCustomName()).replace(/%price%/g, economy_x_1.EconomyX.currency() + shopItem.price);
+        let content = shop.shopui.buy_content.map((v) => v + "\n").toString().replace(/%player%/g, player.getName()).replace(/%money%/g, economy_x_1.EconomyX.currency() + economy_x_1.EconomyX.getMoney(player)).replace(/%item%/g, display.getCustomName()).replace(/%price%/g, economy_x_1.EconomyX.currency() + shopItem.price);
         form.addComponent(new form_1.FormLabel(content));
         form.addComponent(new form_1.FormSlider(`Amount`, 1, 128));
         form.sendTo(player.getNetworkIdentifier(), (f) => {
