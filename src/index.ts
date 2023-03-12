@@ -416,7 +416,7 @@ export namespace ShopForm {
     export function buyForm(shopItem: ShopItem, player: ServerPlayer): void {
         const display = ItemStack.constructWith(shopItem.item, undefined, shopItem.data);
         const form = new CustomForm(display.getCustomName());
-        let content: string = shop.shopui.buy_content.map((v) => v+"\n").toString().replace(/%player%/g, player.getNameTag()).replace(/%money%/g, EconomyX.currency()+EconomyX.getMoney(player)).replace(/%item%/g, display.getCustomName()).replace(/%price%/g, EconomyX.currency()+shopItem.price);
+        let content: string = shop.shopui.buy_content.map((v) => v+"\n").toString().replace(/%player%/g, player.getName()).replace(/%money%/g, EconomyX.currency()+EconomyX.getMoney(player)).replace(/%item%/g, display.getCustomName()).replace(/%price%/g, EconomyX.currency()+shopItem.price);
         form.addComponent(new FormLabel(content));
         form.addComponent(new FormSlider(`Amount`, 1, 128));
         form.sendTo(player.getNetworkIdentifier(), (f) => {
