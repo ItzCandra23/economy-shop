@@ -418,7 +418,7 @@ export namespace ShopForm {
         const form = new CustomForm(display.getCustomName());
         let content: string = shop.shopui.buy_content.map((v) => v+"\n").toString().replace(/%player%/g, player.getName()).replace(/%money%/g, EconomyX.currency()+EconomyX.getMoney(player)).replace(/%item%/g, display.getCustomName()).replace(/%price%/g, EconomyX.currency()+shopItem.price);
         form.addComponent(new FormLabel(content));
-        form.addComponent(new FormSlider(`Amount`, 1, 128));
+        form.addComponent(new FormSlider(`Amount`, 1, 64));
         form.sendTo(player.getNetworkIdentifier(), (f) => {
             const r = f.response;
             if (r === null) return;
