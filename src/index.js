@@ -131,7 +131,7 @@ var ShopMain;
         }
         const total = amount * shopItem.price;
         if (economy_x_1.EconomyX.getMoney(player) - total < 0) {
-            player.sendMessage(`§cYou don't have enough money to buy`);
+            player.sendMessage(`§cYou don't have enough money to buy the selected item`);
             return false;
         }
         player.sendMessage(`§aSuccess to buy §r[${item.getCustomName()}§r, ${amount}]§r§a for §e${economy_x_1.EconomyX.currency() + total}`);
