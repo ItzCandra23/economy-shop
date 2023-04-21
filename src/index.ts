@@ -159,7 +159,7 @@ export namespace ShopMain {
 
         const total = amount*shopItem.price;
         if (EconomyX.getMoney(player)-total < 0) {
-            player.sendMessage(`§cYou don't have enough money to buy`);
+            player.sendMessage(`§cYou don't have enough money to buy the selected item`);
             return false;
         }
 
