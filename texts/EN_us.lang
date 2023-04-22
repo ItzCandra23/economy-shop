@@ -1,0 +1,27 @@
+command.error.console=This command can't use in console
+command.error.itemregistery=Item has been registery
+
+command.shopui.d=Open shopui.
+command.sell.d=Sell your item from your hand or inventory slot.
+command.selladm.d=Sell command for admin.
+
+player.xuid.notfound=§cXuid not found!
+player.money.notenough=§cYou don't have enough money to buy
+player.invalid.amount=§cInvalid amount
+
+success.buy.freeitem=§aSuccess to buy §r[%name%§r, %amount%]§r§a for §2FREE
+success.buy.item=§aSuccess to buy §r[%name%§r, %amount%]§r§a for §e%total%
+
+category.already=Category already
+category.notfound=Category not found!
+category.created=Success to create &f%category%&r in item category
+category.deleted=Success to delete &f%category%&r in item category
+
+item.already=Item already
+item.notfound=Item not found!
+item.same=Item it's same
+item.invalid.price=Invalid price
+item.seted=Success set &f[%olditem%, %olddata%]&r to &f[%item%, %data%]&r from &f%category%
+item.added=Success to add &f%item%&r for &f%price%
+item.removed=Success to remove &f%item%&r from &r%category%
+item.setprice=Success to set &f%item%&r price for &f%price%

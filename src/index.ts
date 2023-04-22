@@ -2,7 +2,7 @@ import { CustomForm, FormButton, FormLabel, FormSlider, SimpleForm } from "bdsx/
 import { ServerPlayer } from "bdsx/bds/player";
 import { ItemStack } from "bdsx/bds/inventory";
 import { EconomyX } from "@bdsx/economy-x";
-import { send, sendMessage } from "./utils/message";
+import { send, sendTranslate } from "./utils/translate";
 import * as path from "path";
 import * as fs from "fs";
 
@@ -141,17 +141,17 @@ export namespace ShopMain {
     export function buy(shopItem: ShopItem, amount: number, player: ServerPlayer): boolean {
         const xuid = player.getXuid();
         if (xuid === "") {
-            player.sendMessage(`§cXuid not found!`);
+            player.sendMessage(send.text(`player.xuid.notfound`));
             return false;
         }
         if (amount < 1) {
-            player.sendMessage(`§cInvalid amount`);
+            player.sendMessage(send.text(`player.invalid.amount`));
             return false;
         }
 
         const item = ItemStack.constructWith(shopItem.item, amount, shopItem.data);
         if (shopItem.price < 0||shopItem.price === 0) {
-            player.sendMessage(`§aSuccess to buy §r[${item.getCustomName()}§r, ${amount}]§r§a for §2FREE`);
+            player.sendMessage(send.text(`success.buy.freeitem`).replace(/%name%/g, item.getCustomName()).replace(/%amount%/g, `${amount}`));
             player.addItem(item);
             player.sendInventory();
             return true;
@@ -159,11 +159,11 @@ export namespace ShopMain {
 
         const total = amount*shopItem.price;
         if (EconomyX.getMoney(player)-total < 0) {
-            player.sendMessage(`§cYou don't have enough money to buy`);
+            player.sendMessage(send.text(`player.money.notenough`));
             return false;
         }
 
-        player.sendMessage(`§aSuccess to buy §r[${item.getCustomName()}§r, ${amount}]§r§a for §e${EconomyX.currency() + total}`);
+        player.sendMessage(send.text(`success.buy.item`).replace(/%name%/g, item.getCustomName()).replace(/%amount%/g, `${amount}`).replace(/%total%/g, `${EconomyX.currency() + total}`));
         EconomyX.removeMoney(player, total);
         player.addItem(item);
         player.sendInventory();
@@ -206,47 +206,47 @@ export namespace ShopMain {
     }
 
     export function createItemCategory(category: string, items: ShopItem[] = [], message: boolean = false, actor?: ServerPlayer): boolean {
-        const send = new sendMessage(actor, message);
+        const sendT = new sendTranslate(actor, message);
         if (shop.items.hasOwnProperty(category)) {
-            send.error(`Category already`);
+            sendT.error(`category.already`);
             return false;
         }
         else {
-            send.success(`Success to create &f${category}&r in item category`);
+            sendT.success(send.text(`category.created`).replace(/%category%/g, category));
             shop.items[category]=items;
             return true;
         }
     }
 
     export function deleteCategory(category: string, message: boolean = false, actor?: ServerPlayer): boolean {
-        const send = new sendMessage(actor, message);
+        const sendT = new sendTranslate(actor, message);
         if (!shop.items.hasOwnProperty(category)) {
-            send.error(`Category not found!`);
+            sendT.error(`category.notfound`);
             return false;
         }
         else {
-            send.success(`Success to delete &f${category}&r in item category`);
+            sendT.success(send.text(`category.deleted`).replace(/%category%/g, category));
             delete shop.items[category];
             return true;
         }
     }
 
     export function addItem(category: string, item: keyof ItemIdMap, data: number = 0, price: number, description?: string, iconPath?: "path"|"url", icon?: string, message: boolean = false, actor?: ServerPlayer): boolean {
-        const send = new sendMessage(actor, message);
+        const sendT = new sendTranslate(actor, message);
         if (!shop.items.hasOwnProperty(category)) {
-            send.error(`Category not found!`);
+            sendT.error(`category.notfound`);
             return false;
         }
         if (shop.items[category].find((v) => item === v.item)) {
-            send.error(`Item already`);
+            sendT.error(`item.already`);
             return false;
         }
         if (price < 0) {
-            send.error(`Invalid price`);
+            sendT.error(`item.invalid.price`);
             return false;
         }
 
-        send.success(`Success to add &f${item}&r for &f${EconomyX.currency()}${price}`);
+        sendT.success(send.text(`item.added`).replace(/%item%/g, item).replace(/%category%/g, category).replace(/%price%/g, `${EconomyX.currency()}${price}`));
         shop.items[category].push({
             icon: icon,
             path: iconPath,
@@ -259,38 +259,38 @@ export namespace ShopMain {
     }
 
     export function removeItem(category: string, item: keyof ItemIdMap, message: boolean = false, actor?: ServerPlayer): boolean {
-        const send = new sendMessage(actor, message);
+        const sendT = new sendTranslate(actor, message);
         if (!shop.items.hasOwnProperty(category)) {
-            send.error(`Category not found!`);
+            sendT.error(`category.notfound`);
             return false;
         }
         if (!shop.items[category].find((v) => item === v.item)) {
-            send.error(`Item not found!`);
+            sendT.error(`item.notfound`);
             return false;
         }
 
-        send.success(`Success to remove &f${item}&r from &r${category}`);
+        sendT.success(send.text(`item.removed`).replace(/%item%/g, item).replace(/%category%/g, category));
         shop.items[category]=shop.items[category].filter((v) => item !== v.item);
         return true;
     }
 
     export function setItem(category: string, item: keyof ItemIdMap, newItem: keyof ItemIdMap, data?: number, message: boolean = false, actor?: ServerPlayer): boolean {
         if (!shop.items.hasOwnProperty(category)) {
-            send.error(`Category not found!`);
+            send.error(`category.notfound`);
             return false;
         }
 
         const shopItem = shop.items[category].find((v) => item === v.item);
         if (!shopItem) {
-            send.error(`Item not found!`);
+            send.error(`item.notfound`);
             return false;
         }
         if (item === newItem && shopItem.data === data) {
-            send.error(`Item it's same`);
+            send.error(`item.same`);
             return false;
         }
 
-        send.success(`Success set &f[${item}, ${shopItem.data ?? 0}]&r to &f[${newItem}, ${data ?? 0}]&r from &f${category}`);
+        send.success(send.text(`item.seted`).replace(/%olditem%/g, item).replace(/%olddata%/g, `${shopItem.data ?? 0}`).replace(/%item%/g, newItem).replace(/%data%/g, `${data ?? 0}`).replace(/%category%/g, category));
         const index = shop.items[category].indexOf(shopItem);
         shop.items[category][index]={
             icon: shopItem.icon,
@@ -312,23 +312,23 @@ export namespace ShopMain {
     }
 
     export function setPrice(category: string, item: keyof ItemIdMap, price: number, message: boolean = false, actor?: ServerPlayer): boolean {
-        const send = new sendMessage(actor, message);
+        const sendT = new sendTranslate(actor, message);
         if (shop.items.hasOwnProperty(category)) {
-            send.error(`Category not found!`);
+            sendT.error(`category.notfound`);
             return false;
         }
         if (price < 0) {
-            send.error(`Invalid price`);
+            sendT.error(`item.invalid.price`);
             return false;
         }
 
         let shopItem = shop.items[category].find((v) => item === v.item);
         if (!shopItem) {
-            send.error(`Item not found!`);
+            sendT.error(`item.notfound`);
             return false;
         }
 
-        send.success(`Success to set &f${item}&r price for &f${EconomyX.currency()}${price}`);
+        sendT.success(send.text(`item.setprice`).replace(/%item%/g, item).replace(/%price%/g, `${EconomyX.currency()}${price}`));
         shopItem.price=price;
         return true;
     }
@@ -416,9 +416,9 @@ export namespace ShopForm {
     export function buyForm(shopItem: ShopItem, player: ServerPlayer): void {
         const display = ItemStack.constructWith(shopItem.item, undefined, shopItem.data);
         const form = new CustomForm(display.getCustomName());
-        let content: string = shop.shopui.buy_content.map((v) => v+"\n").toString().replace(/%player%/g, player.getName()).replace(/%money%/g, EconomyX.currency()+EconomyX.getMoney(player)).replace(/%item%/g, display.getCustomName()).replace(/%price%/g, EconomyX.currency()+shopItem.price);
+        let content: string = shop.shopui.buy_content.map((v) => v+"\n").toString().replace(/,/g, "§r").replace(/%player%/g, player.getName()).replace(/%money%/g, EconomyX.currency()+EconomyX.getMoney(player)).replace(/%item%/g, display.getCustomName()).replace(/%price%/g, EconomyX.currency()+shopItem.price);
         form.addComponent(new FormLabel(content));
-        form.addComponent(new FormSlider(`Amount`, 1, 128));
+        form.addComponent(new FormSlider(`Amount`, 1, 64));
         form.sendTo(player.getNetworkIdentifier(), (f) => {
             const r = f.response;
             if (r === null) return;

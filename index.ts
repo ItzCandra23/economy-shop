@@ -1,7 +1,7 @@
 import { events } from "bdsx/event";
 import { ShopForm, ShopMain } from "./src";
 import { SellMain } from "./src/sell";
-import { send } from "./src/utils/message";
+import { send } from "./src/utils/translate";
 
 export namespace EconomyShop {
     export const sell = SellMain;
@@ -13,7 +13,7 @@ events.serverOpen.on(() => {
     require("./src");
     require("./src/sell");
     require("./src/commands");
-    send.success("Started");
+    send.success("Started!");
 });
 
 events.serverClose.on(() => {

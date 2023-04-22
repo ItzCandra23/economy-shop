@@ -1,7 +1,7 @@
 {
     "name": "@bdsx/economy-shop",
     "description": "This plugin for BDSX",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "main": "index.js",
     "license": "ISC",
     "keywords": [ "economy-shop", "economy-x", "BDSX" ],

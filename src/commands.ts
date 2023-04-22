@@ -4,23 +4,24 @@ import { command } from "bdsx/command";
 import { int32_t } from "bdsx/nativetype";
 import { ShopForm } from ".";
 import { SellMain } from "./sell";
-import { send } from "./utils/message";
+import { send } from "./utils/translate";
 
-command.register("shopui", "Open shopui.")
+command.register("shopui", send.text("command.shopui.d"))
+.alias("shop")
 .overload((p, o) => {
     const actor = o.getEntity();
     if (!actor) {
-        send.error(`This command can't use in console`);
+        send.error(`command.error.console`);
         return;
     }
     if (actor.isPlayer()) ShopForm.main(actor);
 }, {});
 
-command.register("sell", "Sell your item from your hand or slot.")
+command.register("sell", send.text("command.sell.d"))
 .overload((p, o) => {
     const actor = o.getEntity();
     if (!actor) {
-        send.error(`This command can't use in console`);
+        send.error(`command.error.console`);
         return;
     }
     if (actor.isPlayer()) SellMain.sellHand(actor);
@@ -30,7 +31,7 @@ command.register("sell", "Sell your item from your hand or slot.")
 .overload((p, o) => {
     const actor = o.getEntity();
     if (!actor) {
-        send.error(`This command can't use in console`);
+        send.error(`command.error.console`);
         return;
     }
     if (actor.isPlayer()) SellMain.sellItem(actor, p.slot);
@@ -41,19 +42,19 @@ command.register("sell", "Sell your item from your hand or slot.")
 .overload((p, o) => {
     const actor = o.getEntity();
     if (!actor) {
-        send.error(`This command can't use in console`);
+        send.error(`command.error.console`);
         return;
     }
     if (actor.isPlayer()) SellMain.sellHand(actor);
 }, {});
 
-command.register("selladm", "Sell command for admin.", CommandPermissionLevel.Operator)
+command.register("selladm", send.text("command.selladm.d"), CommandPermissionLevel.Operator)
 .overload((p, o) => {
     const actor = o.getEntity()?.getNetworkIdentifier().getActor();
     if (actor === null) return;
     const item = p.item.createInstance(1);
     if (SellMain.has(item)) {
-        send.error(`Item has been registery`, actor);
+        send.error(`command.error.itemregistery`, actor);
         return;
     }
     SellMain.setItem(item, p.price, true, actor);
@@ -67,7 +68,7 @@ command.register("selladm", "Sell command for admin.", CommandPermissionLevel.Op
     if (actor === null) return;
     const item = p.item.createInstance(1);
     if (!SellMain.has(item)) {
-        send.error(`Item has not been registery`, actor);
+        send.error(`command.error.itemregistery`, actor);
         return;
     }
     SellMain.setItem(item, p.price, true, actor);
@@ -81,7 +82,7 @@ command.register("selladm", "Sell command for admin.", CommandPermissionLevel.Op
     if (actor === null) return;
     const item = p.item.createInstance(1);
     if (!SellMain.has(item)) {
-        send.error(`Item has not been registery`, actor);
+        send.error(`command.error.itemregistery`, actor);
         return;
     }
     send.msg(`${item.getCustomName()}&r: &e${EconomyX.currency()}${SellMain.price(item)}`);

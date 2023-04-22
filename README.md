@@ -46,6 +46,9 @@ You can add, remove or change item shop ui in economy-shop/shop.json.
 }
 ```
 
+## Changelog
+* Add Language
+
 ## Others
 * [Github](https://github.com/ItzCandra23/economy-shop)
 * [Report Bugs](https://github.com/ItzCandra23/economy-shop/issue)
