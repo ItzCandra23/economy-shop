@@ -6,7 +6,7 @@ command.sell.d=Sell your item from your hand or inventory slot.
 command.selladm.d=Sell command for admin.
 
 player.xuid.notfound=§cXuid not found!
-player.money.notenough=§cYou don't have enough money to buy
+player.money.notenough=§cYou don't have enough money to buy the selected item
 player.invalid.amount=§cInvalid amount
 
 success.buy.freeitem=§aSuccess to buy §r[%name%§r, %amount%]§r§a for §2FREE
